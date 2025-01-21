@@ -46,23 +46,6 @@ class RequestPermissionActivity : AppActivity() {
         val icon = getDrawable(R.drawable.ic_system_icon)
         icon?.setTint(theme.resolveColor(android.R.attr.colorAccent))
 
-        val dialog = MaterialAlertDialogBuilder(this)
-                .setIcon(icon)
-                .setTitle("Shizuku: ${getString(R.string.app_management_dialog_adb_is_limited_title)}")
-                .setMessage(getString(R.string.app_management_dialog_adb_is_limited_message, Helps.ADB.get()).toHtml(HtmlCompat.FROM_HTML_OPTION_TRIM_WHITESPACE))
-                .setPositiveButton(android.R.string.ok, null)
-                .setOnDismissListener { finish() }
-                .create()
-        dialog.setOnShowListener {
-            (it as AlertDialog).findViewById<TextView>(android.R.id.message)?.movementMethod = LinkMovementMethod.getInstance()
-        }
-        try {
-            dialog.show()
-        } catch (ignored: Throwable) {
-        }
-        return true
-    }
-
     private fun waitForBinder(): Boolean {
         val countDownLatch = CountDownLatch(1)
 
@@ -100,11 +83,6 @@ class RequestPermissionActivity : AppActivity() {
             finish()
             return
         }
-        if (!checkSelfPermission()) {
-            setResult(uid, pid, requestCode, allowed = false, onetime = true)
-            return
-        }
-
         val label = try {
             ai.loadLabel(packageManager)
         } catch (e: Exception) {

@@ -1,6 +1,8 @@
 name: App
 
 on:
+  workflow_dispatch:
+    inputs: {}
   push:
     branches: [ master ]
     paths-ignore:
@@ -23,15 +25,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - name: Write key
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
-        run: |
-          touch signing.properties
-          echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} >> signing.properties
-          echo KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }} >> signing.properties
-          echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_ALIAS_PASSWORD }}' >> signing.properties
-          echo KEYSTORE_FILE=../key.jks >> signing.properties
-          echo ${{ secrets.KEYSTORE }} | base64 --decode > key.jks
+      # - name: Write key
+      #   if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+      #   run: |
+      #     touch signing.properties
+      #     echo KEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} >> signing.properties
+      #     echo KEYSTORE_ALIAS=${{ secrets.KEYSTORE_ALIAS }} >> signing.properties
+      #     echo KEYSTORE_ALIAS_PASSWORD='${{ secrets.KEYSTORE_ALIAS_PASSWORD }}' >> signing.properties
+      #     echo KEYSTORE_FILE=../key.jks >> signing.properties
+      #     echo ${{ secrets.KEYSTORE }} | base64 --decode > key.jks
       - name: Write temporary key
         if: hashFiles('key.jks') == '' && !steps.vars.outputs.HAS_SECRET
         run: |

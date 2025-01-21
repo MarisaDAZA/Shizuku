@@ -60,7 +60,7 @@ class RequestPermissionActivity : AppActivity() {
             dialog.show()
         } catch (ignored: Throwable) {
         }
-        return false
+        return true
     }
 
     private fun waitForBinder(): Boolean {

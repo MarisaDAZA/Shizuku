@@ -39,13 +39,6 @@ class RequestPermissionActivity : AppActivity() {
         }
     }
 
-    private fun checkSelfPermission(): Boolean {
-        val permission = Shizuku.checkRemotePermission("android.permission.GRANT_RUNTIME_PERMISSIONS") == PackageManager.PERMISSION_GRANTED
-        if (permission) return true
-
-        val icon = getDrawable(R.drawable.ic_system_icon)
-        icon?.setTint(theme.resolveColor(android.R.attr.colorAccent))
-
     private fun waitForBinder(): Boolean {
         val countDownLatch = CountDownLatch(1)
 

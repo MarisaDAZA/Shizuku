@@ -3,14 +3,14 @@ name: App
 on:
   workflow_dispatch:
     inputs: {}
-  push:
-    branches: [ master ]
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE'
+  # push:
+  #   branches: [ master ]
+  #   paths-ignore:
+  #     - '.github/ISSUE_TEMPLATE'
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     if: ${{ !startsWith(github.event.head_commit.message, '[skip ci]') && github.repository_owner == 'MarisaDAZA' }}
 
     steps:

@@ -42,10 +42,8 @@ class HomeAdapter(private val homeModel: HomeViewModel, private val appsModel: A
         clear()
         addItem(ServerStatusViewHolder.CREATOR, status, ID_STATUS)
 
-        if (adbPermission) {
-            addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, ID_APPS)
-            addItem(TerminalViewHolder.CREATOR, status, ID_TERMINAL)
-        }
+        addItem(ManageAppsViewHolder.CREATOR, status to grantedCount, ID_APPS)
+        addItem(TerminalViewHolder.CREATOR, status, ID_TERMINAL)
 
         if (running && !adbPermission) {
             addItem(AdbPermissionLimitedViewHolder.CREATOR, status, ID_ADB_PERMISSION_LIMITED)
